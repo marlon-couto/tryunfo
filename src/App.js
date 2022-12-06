@@ -13,10 +13,11 @@ class App extends React.Component {
       cardTrunfo: false,
       cardRare: 'normal',
       cardImage: '',
-      cardAttr1: '',
-      cardAttr2: '',
-      cardAttr3: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
       cardDescription: '',
+      savedCards: [],
     };
   }
 
@@ -73,7 +74,39 @@ class App extends React.Component {
   };
 
   onSaveButtonClick = () => {
-    console.log('Clique');
+    const {
+      cardTrunfo,
+      cardRare,
+      cardImage,
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+    } = this.state;
+
+    const newCard = {
+      cardTrunfo,
+      cardRare,
+      cardImage,
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+    };
+
+    this.setState(({ savedCards }) => ({
+      savedCards: [...savedCards, newCard],
+      cardName: '',
+      cardDescription: '',
+      cardImage: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardRare: 'normal',
+      cardTrunfo: false,
+    }));
   };
 
   render() {
