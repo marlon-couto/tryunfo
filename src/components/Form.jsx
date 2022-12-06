@@ -68,10 +68,14 @@ export default class Form extends Component {
             onInputChange={ onInputChange }
           />
 
-          <TrunfoInput
-            cardTrunfo={ cardTrunfo }
-            onInputChange={ onInputChange }
-          />
+          {!hasTrunfo ? (
+            <TrunfoInput
+              cardTrunfo={ cardTrunfo }
+              onInputChange={ onInputChange }
+            />
+          ) : (
+            <span>Você já tem um Super Trunfo em seu baralho</span>
+          )}
 
           <SaveButton
             isSaveButtonDisabled={ isSaveButtonDisabled }
