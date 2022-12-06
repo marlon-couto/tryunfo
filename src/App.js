@@ -9,7 +9,7 @@ class App extends React.Component {
     this.state = {
       cardName: '',
       hasTrunfo: false,
-      isSaveButtonDisabled: false,
+      isSaveButtonDisabled: true,
       cardTrunfo: false,
       cardRare: 'normal',
       cardImage: '',
@@ -20,13 +20,56 @@ class App extends React.Component {
     };
   }
 
+  handleErrors = () => {
+    const {
+      cardName,
+      cardDescription,
+      cardImage,
+      cardRare,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+    } = this.state;
+
+    const minValue = 0;
+    const maxValue = 90;
+    const maxTotal = 210;
+
+    const number1 = Number(cardAttr1) >= minValue && Number(cardAttr1) <= maxValue;
+    const number2 = Number(cardAttr2) >= minValue && Number(cardAttr2) <= maxValue;
+    const number3 = Number(cardAttr3) >= minValue && Number(cardAttr3) <= maxValue;
+
+    const totalAttr = Number(cardAttr1)
+      + Number(cardAttr2)
+      + Number(cardAttr3)
+      <= maxTotal;
+
+    const errorCases = [
+      !cardName.length,
+      !cardDescription.length,
+      !cardImage.length,
+      !cardRare.length,
+      !number1,
+      !number2,
+      !number3,
+      !totalAttr,
+    ];
+
+    const filledForm = errorCases.every((error) => error !== true);
+
+    this.setState({ isSaveButtonDisabled: !filledForm });
+  };
+
   onInputChange = ({ target }) => {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    this.setState({
-      [name]: value,
-    });
+    this.setState(
+      {
+        [name]: value,
+      },
+      this.handleErrors,
+    );
   };
 
   onSaveButtonClick = () => {
