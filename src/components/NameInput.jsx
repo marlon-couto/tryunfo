@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 export default class NameInput extends Component {
   render() {
-    const { name, handleChange } = this.props;
+    const { cardName, onInputChange } = this.props;
 
     return (
-      <label htmlFor="name">
+      <label htmlFor="cardName">
         Nome da carta
         <input
           type="text"
-          name="name"
-          id="name"
+          name="cardName"
+          id="cardName"
           data-testid="name-input"
-          value={ name }
-          onChange={ handleChange }
+          value={ cardName }
+          onChange={ onInputChange }
         />
       </label>
     );
@@ -22,6 +22,6 @@ export default class NameInput extends Component {
 }
 
 NameInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  cardName: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
 };

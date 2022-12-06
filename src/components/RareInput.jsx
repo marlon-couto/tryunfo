@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class SelectInput extends Component {
+export default class RareInput extends Component {
   render() {
-    const { handleChange, selection } = this.props;
+    const { onInputChange, cardRare } = this.props;
 
     return (
-      <label htmlFor="rarity">
+      <label htmlFor="cardRare">
         Selecione a raridade da carta
         <select
-          name="rarity"
-          id="rarity"
-          onChange={ handleChange }
+          name="cardRare"
+          id="cardRare"
+          onChange={ onInputChange }
           data-testid="rare-input"
-          value={ selection }
+          value={ cardRare }
         >
           <option value="normal">Normal</option>
           <option value="raro">Raro</option>
@@ -24,7 +24,7 @@ export default class SelectInput extends Component {
   }
 }
 
-SelectInput.propTypes = {
-  selection: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
+RareInput.propTypes = {
+  cardRare: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
 };

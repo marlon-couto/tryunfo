@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 
 export default class DescriptionInput extends Component {
   render() {
-    const { description, handleChange } = this.props;
+    const { cardDescription, onInputChange } = this.props;
 
     return (
-      <label htmlFor="description">
+      <label htmlFor="cardDescription">
         Descrição da carta
         <textarea
-          name="description"
-          id="description"
+          name="cardDescription"
+          id="cardDescription"
           rows="5"
           cols="30"
           data-testid="description-input"
-          value={ description }
-          onChange={ handleChange }
+          value={ cardDescription }
+          onChange={ onInputChange }
         />
       </label>
     );
@@ -23,6 +23,6 @@ export default class DescriptionInput extends Component {
 }
 
 DescriptionInput.propTypes = {
-  description: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  cardDescription: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
 };

@@ -1,51 +1,32 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import NameInput from './NameInput';
 import DescriptionInput from './DescriptionInput';
-import FirstAttributeInput from './FirstAttributeInput';
-import SecondAttributeInput from './SecondAttributeInput';
-import ThirdAttributeInput from './ThirdAttributeInput';
+import CardAttrInput1 from './CardAttrInput1';
+import CardAttrInput2 from './CardAttrInput2';
+import CardAttrInput3 from './CardAttrInput3';
 import ImageInput from './ImageInput';
-import SelectInput from './SelectInput';
-import TrunfoCheckbox from './TrunfoCheckbox';
+import RareInput from './RareInput';
+import TrunfoInput from './TrunfoInput';
 import SaveButton from './SaveButton';
 
 export default class Form extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      name: '',
-      trunfo: false,
-      selection: 'normal',
-      image: '',
-      firstAttribute: 0,
-      secondAttribute: 0,
-      thirdAttribute: 0,
-      description: '',
-    };
-  }
-
-  handleChange = ({ target }) => {
-    const { name } = target;
-    const value = target.type === 'checked' ? target.checked : target.value;
-
-    this.setState({
-      [name]: value,
-    });
-  };
-
   render() {
     const {
-      trunfo,
-      selection,
-      image,
-      name,
-      description,
-      firstAttribute,
-      secondAttribute,
-      thirdAttribute,
-    } = this.state;
+      cardTrunfo,
+      cardRare,
+      cardImage,
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      hasTrunfo,
+      isSaveButtonDisabled,
+      onInputChange,
+      onSaveButtonClick,
+    } = this.props;
 
     return (
       <form>
@@ -53,48 +34,66 @@ export default class Form extends Component {
           <legend>Adicione nova carta</legend>
 
           <NameInput
-            name={ name }
-            handleChange={ this.handleChange }
+            cardName={ cardName }
+            onInputChange={ onInputChange }
           />
 
           <DescriptionInput
-            description={ description }
-            handleChange={ this.handleChange }
+            cardDescription={ cardDescription }
+            onInputChange={ onInputChange }
           />
 
-          <FirstAttributeInput
-            firstAttribute={ firstAttribute }
-            handleChange={ this.handleChange }
+          <CardAttrInput1
+            cardAttr1={ cardAttr1 }
+            onInputChange={ onInputChange }
           />
 
-          <SecondAttributeInput
-            secondAttribute={ secondAttribute }
-            handleChange={ this.handleChange }
+          <CardAttrInput2
+            cardAttr2={ cardAttr2 }
+            onInputChange={ onInputChange }
           />
 
-          <ThirdAttributeInput
-            thirdAttribute={ thirdAttribute }
-            handleChange={ this.handleChange }
+          <CardAttrInput3
+            cardAttr3={ cardAttr3 }
+            onInputChange={ onInputChange }
           />
 
           <ImageInput
-            image={ image }
-            handleChange={ this.handleChange }
+            cardImage={ cardImage }
+            onInputChange={ onInputChange }
           />
 
-          <SelectInput
-            selection={ selection }
-            handleChange={ this.handleChange }
+          <RareInput
+            cardRare={ cardRare }
+            onInputChange={ onInputChange }
           />
 
-          <TrunfoCheckbox
-            trunfo={ trunfo }
-            handleChange={ this.handleChange }
+          <TrunfoInput
+            cardTrunfo={ cardTrunfo }
+            onInputChange={ onInputChange }
           />
 
-          <SaveButton />
+          <SaveButton
+            isSaveButtonDisabled={ isSaveButtonDisabled }
+            onSaveButtonClick={ onSaveButtonClick }
+          />
         </fieldset>
       </form>
     );
   }
 }
+
+Form.propTypes = {
+  cardName: PropTypes.string.isRequired,
+  cardDescription: PropTypes.string.isRequired,
+  cardAttr1: PropTypes.string.isRequired,
+  cardAttr2: PropTypes.string.isRequired,
+  cardAttr3: PropTypes.string.isRequired,
+  cardImage: PropTypes.string.isRequired,
+  cardRare: PropTypes.string.isRequired,
+  cardTrunfo: PropTypes.bool.isRequired,
+  hasTrunfo: PropTypes.bool.isRequired,
+  isSaveButtonDisabled: PropTypes.bool.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  onSaveButtonClick: PropTypes.func.isRequired,
+};

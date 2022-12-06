@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 export default class ImageInput extends Component {
   render() {
-    const { image, handleChange } = this.props;
+    const { cardImage, onInputChange } = this.props;
 
     return (
-      <label htmlFor="image">
+      <label htmlFor="cardImage">
         Imagem da carta
         <input
           type="text"
-          name="image"
-          id="image"
+          name="cardImage"
+          id="cardImage"
           data-testid="image-input"
-          value={ image }
-          onChange={ handleChange }
+          value={ cardImage }
+          onChange={ onInputChange }
         />
       </label>
     );
@@ -22,6 +22,6 @@ export default class ImageInput extends Component {
 }
 
 ImageInput.propTypes = {
-  image: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  cardImage: PropTypes.string.isRequired,
+  onInputChange: PropTypes.func.isRequired,
 };
