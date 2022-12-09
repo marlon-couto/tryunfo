@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
+import RemoveButton from './components/RemoveButton';
 
 class App extends React.Component {
   constructor() {
@@ -113,6 +114,18 @@ class App extends React.Component {
     }));
   };
 
+  onRemoveButtonClick = (cardName, cardTrunfo) => {
+    const { savedCards } = this.state;
+    const newArray = savedCards.filter(
+      (savedCard) => savedCard.cardName !== cardName,
+    );
+
+    if (cardTrunfo) {
+      this.setState({ hasTrunfo: false });
+    }
+    this.setState({ savedCards: newArray });
+  };
+
   render() {
     const {
       cardAttr1,
@@ -161,17 +174,25 @@ class App extends React.Component {
 
         <h1>Todas as Cartas</h1>
         {savedCards.map((savedCard) => (
-          <Card
-            key={ savedCard.cardName }
-            cardTrunfo={ savedCard.cardTrunfo }
-            cardRare={ savedCard.cardRare }
-            cardImage={ savedCard.cardImage }
-            cardName={ savedCard.cardName }
-            cardDescription={ savedCard.cardDescription }
-            cardAttr1={ savedCard.cardAttr1 }
-            cardAttr2={ savedCard.cardAttr2 }
-            cardAttr3={ savedCard.cardAttr3 }
-          />
+          <div key={ savedCard.cardName }>
+            <Card
+              cardTrunfo={ savedCard.cardTrunfo }
+              cardRare={ savedCard.cardRare }
+              cardImage={ savedCard.cardImage }
+              cardName={ savedCard.cardName }
+              cardDescription={ savedCard.cardDescription }
+              cardAttr1={ savedCard.cardAttr1 }
+              cardAttr2={ savedCard.cardAttr2 }
+              cardAttr3={ savedCard.cardAttr3 }
+            />
+
+            <RemoveButton
+              onRemoveButtonClick={ () => this.onRemoveButtonClick(
+                savedCard.cardName,
+                savedCard.cardTrunfo,
+              ) }
+            />
+          </div>
         ))}
       </div>
     );
