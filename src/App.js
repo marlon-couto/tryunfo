@@ -2,6 +2,7 @@ import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
 import NameFilter from './components/NameFilter';
+import RareFilter from './components/RareFilter';
 import RemoveButton from './components/RemoveButton';
 
 class App extends React.Component {
@@ -112,7 +113,8 @@ class App extends React.Component {
       cardAttr3: '0',
       cardRare: 'normal',
       cardTrunfo: false,
-      filterType: '',
+      filterName: '',
+      filterRare: 'todas',
     }));
   };
 
@@ -128,16 +130,29 @@ class App extends React.Component {
     this.setState({ savedCards: newArray });
   };
 
-  setFilter = ({ target }) => {
+  setFilterName = ({ target }) => {
     const { value } = target;
-    this.setState({ filterType: value });
+    this.setState({ filterName: value });
   };
 
-  filterCards = () => {
-    const { savedCards, filterType } = this.state;
+  filterCardName = () => {
+    const { savedCards, filterName } = this.state;
     return savedCards.filter(({ cardName }) => {
-      if (filterType === '') return true;
-      return cardName.includes(filterType);
+      if (filterName === '') return true;
+      return cardName.includes(filterName);
+    });
+  };
+
+  setFilterRare = ({ target }) => {
+    const { value } = target;
+    this.setState({ filterRare: value });
+  };
+
+  filterCardRare = (filteredCards) => {
+    const { filterRare } = this.state;
+    return filteredCards.filter(({ cardRare }) => {
+      if (filterRare === 'todas') return true;
+      return cardRare === filterRare;
     });
   };
 
@@ -155,7 +170,7 @@ class App extends React.Component {
       isSaveButtonDisabled,
     } = this.state;
 
-    const filteredCards = this.filterCards();
+    const filteredCards = this.filterCardRare(this.filterCardName());
 
     return (
       <div>
@@ -189,7 +204,8 @@ class App extends React.Component {
         />
 
         <h1>Todas as Cartas</h1>
-        <NameFilter setFilter={ this.setFilter } />
+        <NameFilter setFilterName={ this.setFilterName } />
+        <RareFilter setFilterRare={ this.setFilterRare } />
 
         {filteredCards.map((savedCard) => (
           <div key={ savedCard.cardName }>

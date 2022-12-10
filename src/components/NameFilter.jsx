@@ -3,20 +3,23 @@ import PropTypes from 'prop-types';
 
 export default class NameFilter extends Component {
   render() {
-    const { setFilter } = this.props;
+    const { setFilterName } = this.props;
 
     return (
-      <input
-        type="text"
-        name="nameFilter"
-        id="nameFilter"
-        data-testid="name-filter"
-        onChange={ setFilter }
-      />
+      <label htmlFor="nameFilter">
+        Filtre as cartas por nome:
+        <input
+          type="text"
+          name="nameFilter"
+          id="nameFilter"
+          data-testid="name-filter"
+          onChange={ setFilterName }
+        />
+      </label>
     );
   }
 }
 
 NameFilter.propTypes = {
-  setFilter: PropTypes.func.isRequired,
+  setFilterName: PropTypes.func.isRequired,
 };
