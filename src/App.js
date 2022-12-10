@@ -1,9 +1,7 @@
 import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
-import NameFilter from './components/NameFilter';
-import RareFilter from './components/RareFilter';
-import RemoveButton from './components/RemoveButton';
+import SavedCards from './components/SavedCards';
 
 class App extends React.Component {
   constructor() {
@@ -21,6 +19,9 @@ class App extends React.Component {
       cardAttr3: '0',
       cardDescription: '',
       savedCards: [],
+      filterName: '',
+      filterRare: 'todas',
+      filterTrunfo: false,
     };
   }
 
@@ -113,8 +114,6 @@ class App extends React.Component {
       cardAttr3: '0',
       cardRare: 'normal',
       cardTrunfo: false,
-      filterName: '',
-      filterRare: 'todas',
     }));
   };
 
@@ -156,6 +155,24 @@ class App extends React.Component {
     });
   };
 
+  setFilterTrunfo = ({ target }) => {
+    const { checked } = target;
+    const { hasTrunfo } = this.state;
+
+    if (hasTrunfo === true) {
+      this.setState({ filterTrunfo: checked });
+    }
+  };
+
+  filterCardTrunfo = () => {
+    const { savedCards, filterTrunfo } = this.state;
+
+    return savedCards.find((savedCard) => {
+      if (filterTrunfo === false) return true;
+      return savedCard.cardTrunfo === filterTrunfo;
+    });
+  };
+
   render() {
     const {
       cardAttr1,
@@ -168,9 +185,10 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
       isSaveButtonDisabled,
+      filterName,
+      filterRare,
+      filterTrunfo,
     } = this.state;
-
-    const filteredCards = this.filterCardRare(this.filterCardName());
 
     return (
       <div>
@@ -204,30 +222,18 @@ class App extends React.Component {
         />
 
         <h1>Todas as Cartas</h1>
-        <NameFilter setFilterName={ this.setFilterName } />
-        <RareFilter setFilterRare={ this.setFilterRare } />
-
-        {filteredCards.map((savedCard) => (
-          <div key={ savedCard.cardName }>
-            <Card
-              cardTrunfo={ savedCard.cardTrunfo }
-              cardRare={ savedCard.cardRare }
-              cardImage={ savedCard.cardImage }
-              cardName={ savedCard.cardName }
-              cardDescription={ savedCard.cardDescription }
-              cardAttr1={ savedCard.cardAttr1 }
-              cardAttr2={ savedCard.cardAttr2 }
-              cardAttr3={ savedCard.cardAttr3 }
-            />
-
-            <RemoveButton
-              onRemoveButtonClick={ () => this.onRemoveButtonClick(
-                savedCard.cardName,
-                savedCard.cardTrunfo,
-              ) }
-            />
-          </div>
-        ))}
+        <SavedCards
+          setFilterName={ this.setFilterName }
+          filterName={ filterName }
+          setFilterRare={ this.setFilterRare }
+          filterRare={ filterRare }
+          onRemoveButtonClick={ this.onRemoveButtonClick }
+          filterCardName={ this.filterCardName }
+          filterCardRare={ this.filterCardRare }
+          setFilterTrunfo={ this.setFilterTrunfo }
+          filterTrunfo={ filterTrunfo }
+          filterCardTrunfo={ this.filterCardTrunfo }
+        />
       </div>
     );
   }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class NameFilter extends Component {
   render() {
-    const { setFilterName } = this.props;
+    const { setFilterName, filterName, filterTrunfo } = this.props;
 
     return (
       <label htmlFor="nameFilter">
@@ -14,6 +14,8 @@ export default class NameFilter extends Component {
           id="nameFilter"
           data-testid="name-filter"
           onChange={ setFilterName }
+          value={ filterName }
+          disabled={ filterTrunfo }
         />
       </label>
     );
@@ -22,4 +24,6 @@ export default class NameFilter extends Component {
 
 NameFilter.propTypes = {
   setFilterName: PropTypes.func.isRequired,
+  filterName: PropTypes.string.isRequired,
+  filterTrunfo: PropTypes.bool.isRequired,
 };
