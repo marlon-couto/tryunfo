@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
+import NameFilter from './components/NameFilter';
 import RemoveButton from './components/RemoveButton';
 
 class App extends React.Component {
@@ -111,6 +112,7 @@ class App extends React.Component {
       cardAttr3: '0',
       cardRare: 'normal',
       cardTrunfo: false,
+      filterType: '',
     }));
   };
 
@@ -126,6 +128,19 @@ class App extends React.Component {
     this.setState({ savedCards: newArray });
   };
 
+  setFilter = ({ target }) => {
+    const { value } = target;
+    this.setState({ filterType: value });
+  };
+
+  filterCards = () => {
+    const { savedCards, filterType } = this.state;
+    return savedCards.filter(({ cardName }) => {
+      if (filterType === '') return true;
+      return cardName.includes(filterType);
+    });
+  };
+
   render() {
     const {
       cardAttr1,
@@ -138,8 +153,9 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
       isSaveButtonDisabled,
-      savedCards,
     } = this.state;
+
+    const filteredCards = this.filterCards();
 
     return (
       <div>
@@ -173,7 +189,9 @@ class App extends React.Component {
         />
 
         <h1>Todas as Cartas</h1>
-        {savedCards.map((savedCard) => (
+        <NameFilter setFilter={ this.setFilter } />
+
+        {filteredCards.map((savedCard) => (
           <div key={ savedCard.cardName }>
             <Card
               cardTrunfo={ savedCard.cardTrunfo }
